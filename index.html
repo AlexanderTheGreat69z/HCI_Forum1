@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f90068558c.js" crossorigin="anonymous"></script>
+    <title>Control Panel</title>
+    <style>
+        .selection{
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+
+            max-width: 100%;
+            height: auto;
+
+            background-color: #61a5c2;
+            color: #012a4a;
+            box-shadow: -3px 3px 10px black;
+            border-radius: 10px;
+
+            margin: 1vh 20px;
+            padding: 0 20px;
+        }
+        .side-det{
+            align-items: center;
+            text-align: left;
+
+            height: 13vw;
+            font-size: 2vw;
+
+            margin: 0 40px;
+        }
+        .fas:hover{
+            color: yellow;
+        }
+
+        #toggle{
+            margin-left: auto;
+        }
+        .fa-toggle-on:hover{
+            color: lime;
+        }
+        .fa-toggle-off:hover{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>. H A U M .</h1>
+        <p>Smart Home Control Panel</p>
+    </header>
+    <main>
+        <h2>Utilities</h2>
+        <div class="container">
+            <div class="selection" id="device">
+                <i class="fas fa-lightbulb" onclick="location.href='light.html';"></i>
+                <div class="side-det">
+                    <h3>RGB Light 90W</h3>
+                    <p>Status: <span id="status">Off</span></p>
+                </div>
+                <i id="toggle" class="fas fas fa-toggle-off"></i>
+            </div>
+            <div class="selection" id="device">
+                <i class="fas fa-video" onclick="location.href='camera.html';"></i>
+                <div class="side-det">
+                    <h3>Smart CCTV</h3>
+                    <p>Status: <span id="status">Off</span></p>
+                </div>
+                <i id="toggle" class="fas fa-toggle-off"></i>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    var toggle = document.querySelectorAll('#toggle');
+    var span = document.querySelectorAll('#status');
+    var type = localStorage.getItem('device-type');
+
+    function activateSwitch(device, output_point){
+        let stat = 'Off'
+        device.addEventListener('click', function(e){
+            if (e.target.classList.contains('fa-toggle-on')){
+                e.target.classList.remove('fa-toggle-on');
+                e.target.classList.add('fa-toggle-off');
+                stat = 'Off'
+            }
+            else if (e.target.classList.contains('fa-toggle-off')){
+                e.target.classList.remove('fa-toggle-off');
+                e.target.classList.add('fa-toggle-on');
+                stat = 'On'
+            }
+            output_point.innerHTML = stat
+            localStorage.setItem('status', stat);
+            console.log(localStorage.getItem('status'))
+        })
+    }
+
+    for(var i = 0; i < toggle.length; i++){
+        activateSwitch(toggle[i], span[i])
+    }
+
+    console.log(localStorage.getItem('status'))
+</script>
+</html>

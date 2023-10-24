@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f90068558c.js" crossorigin="anonymous"></script>
+    <title>Control Panel</title>
+    <style>
+        .slide-container {
+            width: 100%; /* Width of the outside container */
+            margin: 30px 0;
+        }
+
+        /* The slider itself */
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 15px;
+
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7; 
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        /* Mouse-over effects */
+        .slider:hover {
+            opacity: 1; /* Fully shown on mouse-over */
+        }
+
+        /* The slider handle */
+        .slider::-webkit-slider-thumb {
+            border-radius: 50%;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #a9d6e5;
+            cursor: pointer;
+        }
+
+        #light{
+            font-size: 200px;
+            margin: 50px;
+            color: rgb(0, 0, 0);
+        }
+
+        #power{
+            transition: all 0.25s;
+            font-size: 100px;
+
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 50%;
+        }
+
+        #power:hover{
+            box-shadow: 0px 0px 10px black;
+        }
+
+        .off{
+            color: black;
+            border: 10px solid black;
+        }
+        .on{
+            color: white;
+            border: 10px solid white;
+            box-shadow: 0px 0px 10px white;
+            text-shadow: 0px 0px 10px white;
+        }
+
+        label{
+            font-size: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>. H A U M .</h1>
+        <p>Smart Home Control Panel</p>
+    </header>
+    <main>
+        <h2>Light Bulb 90W</h2>
+        <div class="container" style="height:auto;">
+            <i class="fas fa-lightbulb" id="light"></i>
+            <div class="slide-container">
+                <label for="red">Hue: <span id="hue-value">0</span></label>
+                <input type="range" name='red' min="0" max="360" value="0" class="slider" id="hsl" style="background-image: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);">
+            </div>
+            <div class="slide-container">
+                <label for="green">Saturation: <span id="sat-value">0</span>%</label>
+                <input type="range" name='green' min="0" max="100" value="0" class="slider" id="hsl">
+            </div>
+            <div class="slide-container">
+                <label for="blue">Brightness: <span id="brt-value">0</span>%</label>
+                <input type="range" name='blue' min="0" max="100" value="0" class="slider" id="hsl" style="background-image: linear-gradient(to right, black, white);">
+            </div>
+            <div class="toggle">
+                <i id='power' class="fas fa-power-off off"></i>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="back" onclick="location.href='index.html'">
+            <i class="fas fa-chevron-left"></i>
+            <p style="font-size:50px;">Back</p>
+        </div>
+    </footer>
+</body>
+<script>
+    var slider = document.querySelectorAll('#hsl')
+    var lightColor = document.getElementById('light')
+    var stat = localStorage.getItem('status')
+    var power = document.getElementById('power')
+
+    if (stat == 'Off'){
+        power.classList.add('off')
+    }
+    else if (stat == 'On'){
+        power.classList.add('on')
+    }
+    console.log(stat)
+
+    power.addEventListener('click', function(e){
+        if (e.target.classList.contains('off')){
+            e.target.classList.remove('off')
+            e.target.classList.add('on')
+        }
+        else if (e.target.classList.contains('on')){
+            e.target.classList.remove('on')
+            e.target.classList.add('off')
+        }
+    })
+
+    for (var i = 0; i < slider.length; i++) {
+        slider[i].addEventListener('input', function(){
+            var hue = slider[0].value
+            var sat = slider[1].value
+            var brt = slider[2].value
+            var color = 'hsl('+hue+','+sat+'%,'+brt+'%)'
+
+            document.getElementById('hue-value').innerHTML = hue
+            document.getElementById('sat-value').innerHTML = sat
+            document.getElementById('brt-value').innerHTML = brt
+
+            lightColor.style.color = color
+            slider[1].style.backgroundImage = 'linear-gradient(to right, black, hsl('+hue+',100%,'+brt+'%)'
+            console.log(color)
+        })
+    }
+
+    
+</script>
+</html>

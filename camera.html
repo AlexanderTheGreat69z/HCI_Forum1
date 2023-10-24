@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f90068558c.js" crossorigin="anonymous"></script>
+    <title>Control Panel</title>
+    <style>
+        img{
+            border: 5px solid white;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .speak{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            width: 40vw;
+            height: auto;
+
+            border: 5px solid #61a5c2;
+            border-radius: 10px;
+
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .options{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #power, #mic{
+            transition: all 0.25s;
+            font-size: 10vw;
+
+            margin: 20px 50px;
+            padding: 4vw;
+            border-radius: 50%;
+        }
+
+        #power:hover{
+            box-shadow: 0px 0px 10px black;
+        }
+
+        #mic:hover{
+            text-shadow: 0px 0px 10px white;
+        }
+
+        #mic:active{
+            text-shadow: 0px 0px 10px yellow;
+            color: yellow;
+        }
+
+        .off{
+            color: black;
+            border: 2vw solid black;
+        }
+        .on{
+            color: white;
+            border: 2vw solid white;
+            box-shadow: 0px 0px 10px white;
+            text-shadow: 0px 0px 10px white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>. H A U M .</h1>
+        <p>Smart Home Control Panel</p>
+    </header>
+    <main>
+        <h2>Smart CCTV</h2>
+        <div class="container" style="height:auto;">
+            <i style='font-size: 50px;'class="fas fa-video"></i>
+            <p>Viewing CAM 01</p>
+            <img id="cam" src="example.jpg" alt="lmao">
+            <div class="options">
+                <div class="speak">
+                    <p id="prompt">Hold to open microphone</p>
+                    <i id="mic" class="fas fa-microphone"></i>
+                </div>
+                <div class="toggle">
+                    <i id='power' class="fas fa-power-off"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="back" onclick="location.href='index.html'">
+            <i class="fas fa-chevron-left"></i>
+            <p>Back</p>
+        </div>
+    </footer>
+</body>
+<script>
+    var stat = localStorage.getItem('status')
+    var power = document.getElementById('power')
+
+    var cam = document.getElementById('cam')
+    var mic = document.getElementById('mic')
+
+    if (stat == 'Off'){
+        power.classList.add('off')
+    }
+    else if (stat == 'On'){
+        power.classList.add('on')
+    }
+
+    power.addEventListener('click', function(e){
+        if (e.target.classList.contains('off')){
+            e.target.classList.remove('off')
+            e.target.classList.add('on')
+            stat = 'on'
+            console.log('on')
+            cam.src = 'example.jpg'
+        }
+        else if (e.target.classList.contains('on')){
+            e.target.classList.remove('on')
+            e.target.classList.add('off')
+            stat = 'off'
+            console.log('off')
+            cam.src = 'off.jpg'
+        }
+    })
+
+</script>
+</html>
