@@ -110,9 +110,11 @@
 
     if (stat == 'Off'){
         power.classList.add('off')
+        cam.src = 'off.jpg'
     }
     else if (stat == 'On'){
         power.classList.add('on')
+        cam.src = 'example.jpg'
     }
 
     power.addEventListener('click', function(e){
